@@ -96,6 +96,7 @@ function NumberPractice() {
         showCorrectAnswer={false}
         placeholder={options.phase === "compound" ? "number" : "romaji"}
         fontSize={options.phase === "compound" ? "2rem" : undefined}
+        kanaHeight="5.25rem"
       />
 
       {previousQuestion && (

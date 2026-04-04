@@ -19,6 +19,7 @@ export interface PracticeKanaInputProps {
   mode?: "kana" | "word" | "number";
   placeholder?: string;
   fontSize?: string;
+  kanaHeight?: string;
 }
 
 function PracticeKanaInput({
@@ -29,6 +30,7 @@ function PracticeKanaInput({
   mode = "kana",
   placeholder = "romaji",
   fontSize,
+  kanaHeight,
 }: PracticeKanaInputProps) {
   const stringifiedRomaji = stringifyRomaji(romaji);
 
@@ -85,7 +87,7 @@ function PracticeKanaInput({
 
   return (
     <Container>
-      <Stack align="center">
+      <Stack align="center" justify="center" sx={kanaHeight ? { height: kanaHeight } : undefined}>
         <Tooltip {...tooltipProps} key={stringifiedRomaji} label={stringifiedRomaji} opened={showAnswer}>
           <Text size={fontSize ?? (mode === "word" ? "1.4rem" : "3.75rem")}>{kana}</Text>
         </Tooltip>
