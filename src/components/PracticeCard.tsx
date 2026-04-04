@@ -1,8 +1,10 @@
 import { ActionIcon, Tooltip } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 import React, { useState } from "react";
+import AdvancedMenu from "./AdvancedMenu";
 import BruteForceMenu from "./BruteForceMenu";
 import FreePractice from "./FreePractice";
+import NumberPractice from "./NumberPractice";
 import PracticeMenu from "./PracticeMenu";
 import TitledCard from "./TitledCard";
 import WordPractice from "./WordPractice";
@@ -12,7 +14,7 @@ export interface MiscPracticeOptions {
   showCorrectAnswer: boolean;
 }
 
-export type PracticeCardPages = "menu" | "bruteforce" | "free" | "word";
+export type PracticeCardPages = "menu" | "bruteforce" | "free" | "word" | "advanced-menu" | "number";
 
 export interface BackToMenuButtonProps {
   onClick: () => void;
@@ -28,6 +30,11 @@ function BackToMenuButton({ onClick }: BackToMenuButtonProps) {
   );
 }
 
+const parentPage: Partial<Record<PracticeCardPages, PracticeCardPages>> = {
+  "advanced-menu": "menu",
+  number: "advanced-menu",
+};
+
 function PracticeCard() {
   const [page, setPage] = useState<PracticeCardPages>("menu");
 
@@ -35,7 +42,8 @@ function PracticeCard() {
     setPage(newPage);
   };
 
-  const backToMenuButton = <BackToMenuButton onClick={() => handlePageChange("menu")} />;
+  const backTarget = parentPage[page] ?? "menu";
+  const backToMenuButton = <BackToMenuButton onClick={() => handlePageChange(backTarget)} />;
 
   let pageElement;
   switch (page) {
@@ -50,6 +58,12 @@ function PracticeCard() {
       break;
     case "word":
       pageElement = <WordPractice />;
+      break;
+    case "advanced-menu":
+      pageElement = <AdvancedMenu onPageChange={handlePageChange} />;
+      break;
+    case "number":
+      pageElement = <NumberPractice />;
       break;
   }
 
