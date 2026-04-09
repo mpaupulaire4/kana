@@ -114,7 +114,9 @@ function BruteForcePractice({ kanaType, initialProgress }: BruteForcePracticePro
 
   const [currentKana, setCurrentKana] = useState(streamRef.current.current());
 
-  const [firstEncounterKana, setFirstEncounterKana] = useState<KanaChars[]>(kanaOfStage.map((k) => k.kana));
+  const [firstEncounterKana, setFirstEncounterKana] = useState<KanaChars[]>(
+    stage.learning ? kanaOfStage.map((k) => k.kana) : [],
+  );
   const firstEncounter = firstEncounterKana.includes(currentKana.kana);
 
   const computeNewStats = (correct: boolean): BruteForcePracticeStats => {
